@@ -1,3 +1,4 @@
 # Build folder and log file
-android/build
+android/build/
+bin
 *.log
