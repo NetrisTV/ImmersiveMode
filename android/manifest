@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0
+apiversion: 2
+architectures: armeabi armeabi-v7a x86
+description: Immersive mode.
+author: Ivan Telenkov
+license: MIT
+copyright: Copyright (c) 2015 by Your Company
+
+# these should not be edited
+name: immersive_mode
+moduleid: com.n0n1.immersive.mode
+guid: b9f2fde2-de1b-4e5f-bad6-38c242dce539
+platform: android
+minsdk: 5.1.1.GA
