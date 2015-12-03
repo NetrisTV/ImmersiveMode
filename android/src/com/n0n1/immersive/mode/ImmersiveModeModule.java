@@ -11,8 +11,12 @@ package com.n0n1.immersive.mode;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.titanium.TiApplication;
+import org.appcelerator.titanium.proxy.TiWindowProxy;
 import org.appcelerator.kroll.common.Log;
 
+import android.app.Activity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 
 @Kroll.module(name="ImmersiveMode", id="com.n0n1.immersive.mode")
 public class ImmersiveModeModule extends KrollModule
@@ -20,8 +24,11 @@ public class ImmersiveModeModule extends KrollModule
 
 	// Standard Debugging variables
 	private static final String LCAT = "ImmersiveModeModule";
-	private static final String DBG = "ImmersiveModeModule";
-	@Kroll.constant public static String VERSION = "1.0";
+
+	@Kroll.constant public static final String VERSION = "1.0";
+	
+	private int startUiOptions;
+	private static TiWindowProxy window;
 
 
 	public ImmersiveModeModule()
@@ -29,12 +36,30 @@ public class ImmersiveModeModule extends KrollModule
 		super();
 	}
 
+	
 	@Kroll.onAppCreate
 	public static void onAppCreate(TiApplication app)
 	{
-		Log.d(DBG, "[onAppCreate]");
+		Activity activity;
 		Log.d(LCAT, "Init module: " +  "Immersive Mode " + VERSION);
+		Log.d(LCAT, "[onAppCreate]");
+	
+		if (window != null){
+			activity =  window.getActivity();
+		} else {
+			TiApplication appContext = TiApplication.getInstance();
+			activity =  appContext.getCurrentActivity();
+		}
+		
+		Log.d(LCAT, "Start Systeme UI Option: " + activity.getWindow().getDecorView().getSystemUiVisibility()); 
 	}
 
+	
+	@Kroll.method
+	public int getSystemUIOptions() {
+		
+		
+		return 0;
+	}
 }
 
