@@ -15,4 +15,4 @@ name: immersive_mode
 moduleid: com.n0n1.immersive.mode
 guid: b9f2fde2-de1b-4e5f-bad6-38c242dce539
 platform: android
-minsdk: 5.1.1.GA
+minsdk: 5.1.1.NETRIS
