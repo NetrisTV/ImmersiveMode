@@ -2,3 +2,5 @@
 /android/build/
 bin/
 *.log
+/android/dist/
+/android/libs/
