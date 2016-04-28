@@ -51,7 +51,7 @@ public class ImmersiveModeModule extends KrollModule
 			activity =  appContext.getCurrentActivity();
 		}
 		
-		Log.d(LCAT, "Start Systeme UI Option: " + activity.getWindow().getDecorView().getSystemUiVisibility()); 
+		// Log.d(LCAT, "Start Systeme UI Option: " + activity.getWindow().getDecorView().getSystemUiVisibility()); 
 	}
 
 	
