@@ -64,7 +64,11 @@ public class ImmersiveViewProxy extends TiViewProxy
 		@Override
 		public void run() {
 			Log.d(MODULE_NAME, "RESET" );
-			getActivity().getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_RESET);
+			Activity activity = getActivity();
+			if (activity == null) {
+				return;
+			}
+			activity.getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_RESET);
 		}
 	};
 	
@@ -73,7 +77,11 @@ public class ImmersiveViewProxy extends TiViewProxy
 		@Override
 		public void run() {
 			Log.d(MODULE_NAME, "HIDE_SYSTEM_UI");
-			getActivity().getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_FULLSCREEN | UI_FLAG_HIDE_NAVIGATION);
+			Activity activity = getActivity();
+			if (activity == null) {
+				return;
+			}
+			activity.getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_FULLSCREEN | UI_FLAG_HIDE_NAVIGATION);
 		}
 	};
 	
@@ -117,18 +125,31 @@ public class ImmersiveViewProxy extends TiViewProxy
 	@Override
 	public boolean handleMessage(Message msg) {
 		Log.d(TAG, "[handleMessage]");
+		Activity activity;
 		switch (msg.what) {
 		case MSG_HIDE_SYSTEM_UI:
 			Log.d(MODULE_NAME, "HIDE_SYSTEM_UI");
-			getActivity().getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_FULLSCREEN | UI_FLAG_HIDE_NAVIGATION);
+			activity = getActivity();
+			if (activity == null) {
+				return true;
+			}
+			activity.getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_FULLSCREEN | UI_FLAG_HIDE_NAVIGATION);
 			return true;
 		case MSG_RESET_SYSTEM_UI:
 			Log.d(MODULE_NAME, "RESET");
-			getActivity().getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_RESET);
+			activity = getActivity();
+			if (activity == null) {
+				return true;
+			}
+			activity.getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_RESET);
 			return true;
 		case MSG_SHOW_SYSTEM_UI:
 			Log.d(MODULE_NAME, "SHOW_SYSTEM_UI");
-			getActivity().getWindow().getDecorView().setSystemUiVisibility(~UI_FLAG_FULLSCREEN | ~UI_FLAG_HIDE_NAVIGATION);
+			activity = getActivity();
+			if (activity == null) {
+				return true;
+			}
+			activity.getWindow().getDecorView().setSystemUiVisibility(~UI_FLAG_FULLSCREEN | ~UI_FLAG_HIDE_NAVIGATION);
 			return true;
 		default:
 			return super.handleMessage(msg);
@@ -220,7 +241,11 @@ public class ImmersiveViewProxy extends TiViewProxy
 	public void hideSystemUI() {
 		if(TiApplication.isUIThread()) {
 			Log.d(MODULE_NAME, "[hideSystemUI]");
-			getActivity().getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_FULLSCREEN | UI_FLAG_HIDE_NAVIGATION);
+			Activity activity = getActivity();
+			if (activity == null) {
+				return;
+			}
+			activity.getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_FULLSCREEN | UI_FLAG_HIDE_NAVIGATION);
 			return;
 		}
 		
@@ -233,9 +258,13 @@ public class ImmersiveViewProxy extends TiViewProxy
 	public void showSystemUI() {
 		if(TiApplication.isUIThread()) {
 			Log.d(MODULE_NAME, "SHOW_SYSTEM_UI");
-			int systemUiOptions = getActivity().getWindow().getDecorView().getSystemUiVisibility(); 
+			Activity activity = getActivity();
+			if (activity == null) {
+				return;
+			}
+			int systemUiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
 			systemUiOptions = systemUiOptions & ~UI_FLAG_FULLSCREEN & ~UI_FLAG_HIDE_NAVIGATION;
-			getActivity().getWindow().getDecorView().setSystemUiVisibility(systemUiOptions);
+			activity.getWindow().getDecorView().setSystemUiVisibility(systemUiOptions);
 			return;
 		}
 		
@@ -247,7 +276,11 @@ public class ImmersiveViewProxy extends TiViewProxy
 	public void resetSystemUI() {
 		if(TiApplication.isUIThread()) {
 			Log.d(MODULE_NAME, "RESET");
-			getActivity().getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_RESET);
+			Activity activity = getActivity();
+			if (activity == null) {
+				return;
+			}
+			activity.getWindow().getDecorView().setSystemUiVisibility(UI_FLAG_RESET);
 			return;
 		}
 		
@@ -257,12 +290,20 @@ public class ImmersiveViewProxy extends TiViewProxy
 	
 	@Kroll.method 
 	public int getSystemUIVisivility() {
-		return getActivity().getWindow().getDecorView().getSystemUiVisibility();
+		Activity activity = getActivity();
+		if (activity == null) {
+			return 0;
+		}
+		return activity.getWindow().getDecorView().getSystemUiVisibility();
 	}
 	
 	@Kroll.method 
 	public void aboutSystemUI() {
-		int uiOptions = getActivity().getWindow().getDecorView().getSystemUiVisibility();
+		Activity activity = getActivity();
+		if (activity == null) {
+			return;
+		}
+		int uiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
 		Log.d(MODULE_NAME, "SYSTEM_UI_OPTIONS: " + uiOptions);
 	}
 }
