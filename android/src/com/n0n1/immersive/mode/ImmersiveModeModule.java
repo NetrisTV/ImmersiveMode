@@ -25,7 +25,7 @@ public class ImmersiveModeModule extends KrollModule
 	// Standard Debugging variables
 	private static final String LCAT = "ImmersiveModeModule";
 
-	@Kroll.constant public static final String VERSION = "1.0";
+	@Kroll.constant public static final String VERSION = "1.0.3";
 	
 	private int startUiOptions;
 	private static TiWindowProxy window;
