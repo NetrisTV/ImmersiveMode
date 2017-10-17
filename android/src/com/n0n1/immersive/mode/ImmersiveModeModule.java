@@ -40,18 +40,8 @@ public class ImmersiveModeModule extends KrollModule
 	@Kroll.onAppCreate
 	public static void onAppCreate(TiApplication app)
 	{
-		Activity activity;
 		Log.d(LCAT, "Init module: " +  "Immersive Mode " + VERSION);
 		Log.d(LCAT, "[onAppCreate]");
-	
-		if (window != null){
-			activity =  window.getActivity();
-		} else {
-			TiApplication appContext = TiApplication.getInstance();
-			activity =  appContext.getCurrentActivity();
-		}
-		
-		// Log.d(LCAT, "Start Systeme UI Option: " + activity.getWindow().getDecorView().getSystemUiVisibility()); 
 	}
 
 	
