@@ -41,10 +41,11 @@ public class ImmersiveViewProxy extends TiViewProxy
 	private static final int MSG_RESET_SYSTEM_UI = MSG_FIRST_ID + 1;
 	private static final int MSG_HIDE_SYSTEM_UI = MSG_FIRST_ID + 2;
 	private static final int MSG_SHOW_SYSTEM_UI = MSG_FIRST_ID + 3;
-	
+	private static final int MSG_SET_SYSTEM_UI = MSG_FIRST_ID + 4;
 
 	
 	@Kroll.constant public static int UI_FLAG_IMMERSIVE = View.SYSTEM_UI_FLAG_IMMERSIVE;
+	@Kroll.constant public static int UI_FLAG_IMMERSIVE_STICKY = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 	@Kroll.constant public static int UI_FLAG_HIDE_NAVIGATION = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 	@Kroll.constant public static int UI_FLAG_LAYOUT_HIDE_NAVIGATION = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
 	@Kroll.constant public static int UI_FLAG_FULLSCREEN = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -150,6 +151,14 @@ public class ImmersiveViewProxy extends TiViewProxy
 				return true;
 			}
 			activity.getWindow().getDecorView().setSystemUiVisibility(~UI_FLAG_FULLSCREEN | ~UI_FLAG_HIDE_NAVIGATION);
+			return true;
+		case MSG_SET_SYSTEM_UI:
+			Log.d(MODULE_NAME, "SET_SYSTEM_UI");
+			activity = getActivity();
+			if (activity == null) {
+				return true;
+			}
+			activity.getWindow().getDecorView().setSystemUiVisibility(msg.arg1);
 			return true;
 		default:
 			return super.handleMessage(msg);
@@ -295,6 +304,23 @@ public class ImmersiveViewProxy extends TiViewProxy
 			return 0;
 		}
 		return activity.getWindow().getDecorView().getSystemUiVisibility();
+	}
+
+	@Kroll.method
+	public void setSystemUIVisivility(int visibility) {
+		if(TiApplication.isUIThread()) {
+			Log.d(MODULE_NAME, "setSystemUIVisivility");
+			Activity activity = getActivity();
+			if (activity == null) {
+				return;
+			}
+			activity.getWindow().getDecorView().setSystemUiVisibility(visibility);
+			return;
+		}
+
+		Message msg = getMainHandler().obtainMessage(MSG_SET_SYSTEM_UI);
+		msg.arg1 = visibility;
+		msg.sendToTarget();
 	}
 	
 	@Kroll.method 
