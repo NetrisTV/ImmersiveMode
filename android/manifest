@@ -2,9 +2,9 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 1.0.3
+version: 1.0.4
 apiversion: 3
-architectures: armeabi armeabi-v7a x86
+architectures: armeabi-v7a x86
 description: Immersive mode.
 author: Ivan Telenkov
 license: MIT
