@@ -223,12 +223,7 @@ public class ImmersiveViewProxy extends TiViewProxy
 		Log.d(TAG, "[onDestroy]");
 		super.onDestroy(activity);
 	}
-	
-	@Override
-	public void add(TiViewProxy child) {
-		super.add(child);
-	}
-	
+
 	@Override
 	public void setView(TiUIView view) {
 		super.setView(view);
